@@ -1,5 +1,5 @@
 import component from './component';
 
-import './main.css';
+import './styles/main.scss';
 
 document.body.appendChild(component());
