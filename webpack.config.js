@@ -11,11 +11,13 @@ const commonConfig = merge([
             }),
         ],
     },
-
-    parts.loadCSS(),
 ]);
 
-const productionConfig = merge([]);
+const productionConfig = merge([
+    parts.extractCSS({
+        use: ['css-loader', 'sass-loader'],
+    })
+]);
 
 const developmentConfig = merge([
     parts.devServer({
@@ -23,6 +25,8 @@ const developmentConfig = merge([
         host: process.env.HOST,
         port: process.env.PORT,
     }),
+
+    parts.loadCSS(),
 ]);
 
 module.exports = mode => {
