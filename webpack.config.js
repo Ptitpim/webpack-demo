@@ -1,26 +1,32 @@
+const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-    devServer: {
-        // Display only errors to reduce the amount of output.
-        stats: 'errors-only',
+const parts = require('./webpack.parts');
 
-        // Parse host and port env to allow customization
-        //
-        // If you use Docker, Vagrant or Clound9, set
-        // host: options.host | '0.0.0.0';
-        //
-        // 0.0.0.0 is available to all network devices
-        // unlike default `localhost`.
-        host: process.env.HOST, // Defaults to `localhost`
-        port: process.env.PORT, // Defaults to 8080
-        open: true, // Open the page in browser
-        overlay: true,
+const commonConfig = merge([
+    {
+        plugins: [
+            new HtmlWebpackPlugin({
+                title: 'Webpack demo',
+            }),
+        ],
     },
+]);
 
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: 'Webpack demo',
-        }),
-    ],
-};
+const productionConfig = merge([]);
+
+const developmentConfig = merge([
+    parts.devServer({
+        // Customize host/port here if needed
+        host: process.env.HOST,
+        port: process.env.PORT,
+    }),
+]);
+
+module.exports = mode => {
+    if (mode === 'production') {
+        return merge(commonConfig, productionConfig, { mode });
+    }
+
+    return merge(commonConfig, developmentConfig, { mode });
+}
