@@ -24,9 +24,19 @@ const productionConfig = merge([
     parts.extractCSS({
         use: ['css-loader', parts.autoprefix(), 'sass-loader'],
     }),
+
     parts.purifyCSS({
         // Give paths to parse for rules. These should be absolute!
         paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
+    }),
+
+    parts.loadImages({
+        options: {
+            limit: 15000,
+            name: '[path][name].[ext]',
+            publicPath: '../',
+            context: 'src',
+        },
     }),
 ]);
 
@@ -38,6 +48,8 @@ const developmentConfig = merge([
     }),
 
     parts.loadCSS(),
+
+    parts.loadImages(),
 ]);
 
 module.exports = mode => {
