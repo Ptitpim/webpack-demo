@@ -10,7 +10,7 @@ exports.extractCSS = ({ include, exclude, use = [] }) => {
         module: {
             rules: [
                 {
-                    test: /\.scss$/,
+                    test: /\.(css|scss)$/,
                     include,
                     exclude,
 
@@ -39,7 +39,7 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
     module: {
         rules: [
             {
-                test: /\.scss$/,
+                test: /\.(css|scss)$/,
                 include,
                 exclude,
 
