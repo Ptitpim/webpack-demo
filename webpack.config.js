@@ -22,7 +22,7 @@ const commonConfig = merge([
 
 const productionConfig = merge([
     parts.extractCSS({
-        use: ['css-loader', 'sass-loader'],
+        use: ['css-loader', parts.autoprefix(), 'sass-loader'],
     }),
     parts.purifyCSS({
         // Give paths to parse for rules. These should be absolute!
